@@ -7,10 +7,9 @@
 - [背景](#背景)
 - [安装](#安装)
 - [使用说明](#使用说明)
-  - [生成器](#生成器)
-- [徽章](#徽章)
+  - [命令行参数](#命令行参数)
+  - [结果参数](#结果参数)
 - [示例](#示例)
-- [相关仓库](#相关仓库)
 - [维护者](#维护者)
 - [如何贡献](#如何贡献)
 - [使用许可](#使用许可)
@@ -30,11 +29,12 @@
 这个项目无需安装其他包，只需要编写api.list
 
 ```shell
-#接口地址1
-http:xxx.com/aaa/bbb
-http:xxx.com/aaa/bbb
-#接口地址2
-http:xxx.com/aaa/ccc
+#接口名称1
+http://接口1地址1
+http://接口1地址2
+#接口名称2
+http://接口2地址1
+http://接口2地址2
 ```
 
 然后使用
@@ -45,23 +45,26 @@ http:xxx.com/aaa/ccc
 
 ## 使用说明
 
-```shell
-#Google
-https://mail.google.com/mail/u/0/#inbox
-https://www.google.com/
-https://docs.google.com/spreadsheets/u/0/
-https://translate.google.com/
-https://docs.google.com/document/u/0/
-https://drive.google.com/drive/my-drive
-https://plus.google.com/
-https://www.youtube.com/#test
-https://www.baidu.com
-https://www.google.com
-#Golang
-https://studygolang.com/pkgdoc
-https://gorm.io/zh_CN/
-https://golang.org/pkg/
-```
+### 命令行参数
+
+#### -P [服务名称]
+
+只测试哪些服务，如只测试Google服务。其他服务不检测
+
+#### -U [url地址]
+
+只测试哪些URL地址，如只测试www.google.com上面的服务
+
+### 结果参数
+
+|名称|说明|
+|---|---|
+|INFO|接口测试通过|
+|ERRO|接口测试失败|
+|Project|服务名称，由于一个服务分布式部署，可以有多个接口|
+|Times|接口响应时间|
+|URL|接口测试地址|
+|err|接口测试地址|
 
 ## 示例
 
@@ -81,7 +84,27 @@ https://www.google.com
 https://studygolang.com/pkgdoc
 https://gorm.io/zh_CN/
 https://golang.org/pkg/
-```。
+```
+
+输出结果
+
+```log
+ 1. INFO[0000] Successful !                                  Project=Golang Times=0.50 Url="https://gorm.io/zh_CN/"
+ 2. INFO[0000] Successful !                                  Project=Golang Times=0.57 Url="https://studygolang.com/pkgdoc"
+ 3. INFO[0000] Successful !                                  Project=Google Times=0.92 Url="https://www.google.com"
+ 4. INFO[0000] Successful !                                  Project=Google Times=0.92 Url="https://www.google.com/"
+ 5. INFO[0001] Successful !                                  Project=Google Times=1.34 Url="https://translate.google.com/"
+ 6. INFO[0001] Successful !                                  Project=Google Times=1.37 Url="https://www.youtube.com/#test"
+ 7. INFO[0001] Successful !                                  Project=Golang Times=1.41 Url="https://golang.org/pkg/"
+ 8. INFO[0001] Successful !                                  Project=Google Times=1.57 Url="https://docs.google.com/spreadsheets/u/0/"
+ 9. INFO[0001] Successful !                                  Project=Google Times=1.69 Url="https://docs.google.com/document/u/0/"
+10. INFO[0002] Successful !                                  Project=Google Times=2.54 Url="https://mail.google.com/mail/u/0/#inbox"
+11. INFO[0002] Successful !                                  Project=Google Times=2.54 Url="https://plus.google.com/"
+12. INFO[0002] Successful !                                  Project=Google Times=2.62 Url="https://drive.google.com/drive/my-drive"
+Over time:      2.62s
+Success count   12 time
+Error count:    0 times
+```
 
 ## 维护者
 
@@ -93,4 +116,4 @@ https://golang.org/pkg/
 
 ## 使用许可
 
-[MIT](LICENSE) © Richard Littauer
+[MIT](LICENSE) © kuliantnt

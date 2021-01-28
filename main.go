@@ -3,17 +3,18 @@ package main
 import (
 	"flag"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var flagProject = flag.String("P", "", "Project name")
-var flagUrl = flag.String("U", "", "Url name")
+var flagURL = flag.String("U", "", "Url name")
 
 func init() {
 	//解析flag
@@ -50,21 +51,23 @@ func main() {
 		}
 		//根据 -P 入参判断是否执行
 		runProject := false
+		var runURL bool = false
 		if *flagProject == "" {
 			runProject = true
 		} else if strings.Contains(prefix, *flagProject) {
 			runProject = true
 		}
 
-		runUrl := false
 		//根据 -U 入参判断是否执行
-		if *flagUrl == "" {
-			runUrl = true
-		} else if strings.Contains(url, *flagUrl) {
-			runUrl = true
+		if *flagURL == "" {
+			runURL = true
+		} else if strings.Contains(url, *flagURL) {
+			runURL = true
+		} else {
+			runURL = false
 		}
 		//实际上执行的语句
-		if runProject && runUrl {
+		if runProject && runURL {
 			index++
 			go fetch(url, prefix, ch)
 		}
@@ -118,7 +121,6 @@ func fetch(url, prefix string, ch chan<- result) {
 	//不需要获取resource
 	if err != nil {
 		//出现错误
-		//	ch <- fmt.Sprintf("has err: \t%s:\t%v\t%s", url, err, prefix)
 		ch <- result{
 			prefix, url, err, "",
 		}
@@ -128,7 +130,6 @@ func fetch(url, prefix string, ch chan<- result) {
 	//获取时间
 	secs := time.Since(start).Seconds()
 	//导出数据
-	// ch <- fmt.Sprintf("%.2fs\t%7d\t%s\t%v", secs, nBytes, url, prefix)
 	ch <- result{
 		prefix,
 		url,
