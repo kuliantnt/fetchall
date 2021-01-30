@@ -26,15 +26,25 @@
 
 ## 安装
 
-这个项目无需安装其他包，只需要编写api.list
+这个项目无需安装其他包，只需要编写`api.yaml` 参考如下
 
-```shell
-#接口名称1
-http://接口1地址1
-http://接口1地址2
-#接口名称2
-http://接口2地址1
-http://接口2地址2
+```yaml
+projects:
+  - projectname: mail
+    method: GET
+    context:
+      - { url: https://aaa/mail/test1, name: side:aaa }
+      - { url: https://bbb/mail/test1, name: side:bbb }
+  - projectname: api
+    method: GET
+    context:
+      - { url: https://aaa/api/test1, name: side:aaa }
+      - { url: https://bbb/api/test1, name: side:bbb }
+      - { url: https://ccc/api/test1, name: size:ccc }
+  - projectname: socket
+    method: POST
+    context:
+      - { url: https://ccc/api/socket, name: side:socket }
 ```
 
 然后使用
@@ -42,6 +52,8 @@ http://接口2地址2
 ```shell
 ./fetchall
 ```
+
+就可以启动
 
 ## 使用说明
 
@@ -68,42 +80,37 @@ http://接口2地址2
 
 ## 示例
 
-```shell
-#Google
-https://mail.google.com/mail/u/0/#inbox
-https://www.google.com/
-https://docs.google.com/spreadsheets/u/0/
-https://translate.google.com/
-https://docs.google.com/document/u/0/
-https://drive.google.com/drive/my-drive
-https://plus.google.com/
-https://www.youtube.com/#test
-https://www.baidu.com
-https://www.google.com
-#Golang
-https://studygolang.com/pkgdoc
-https://gorm.io/zh_CN/
-https://golang.org/pkg/
+```yaml
+projects:
+  - projectname: google
+    method: GET
+    context:
+      - { url: https://mail.google.com/mail/u/0/#inbox, name: google_mail }
+      - { url: https://www.google.com/, name: google_search }
+  - projectname: Golang
+    method: GET
+    context:
+      - { url: https://docs.google.com/spreadsheets/u/0/, name: google_doc }
+      - { url: https://studygolang.com/pkgdoc, name: pkgdoc }
+      - { url: https://golang.org/pkg, name: golang_pkg }
+  - projectname: cpepc
+    method: GET
+    context:
+      - { url: http://cpepc.com.cn, name: 001 }
 ```
 
 输出结果
 
 ```log
- 1. INFO[0000] Successful !                                  Project=Golang Times=0.50 Url="https://gorm.io/zh_CN/"
- 2. INFO[0000] Successful !                                  Project=Golang Times=0.57 Url="https://studygolang.com/pkgdoc"
- 3. INFO[0000] Successful !                                  Project=Google Times=0.92 Url="https://www.google.com"
- 4. INFO[0000] Successful !                                  Project=Google Times=0.92 Url="https://www.google.com/"
- 5. INFO[0001] Successful !                                  Project=Google Times=1.34 Url="https://translate.google.com/"
- 6. INFO[0001] Successful !                                  Project=Google Times=1.37 Url="https://www.youtube.com/#test"
- 7. INFO[0001] Successful !                                  Project=Golang Times=1.41 Url="https://golang.org/pkg/"
- 8. INFO[0001] Successful !                                  Project=Google Times=1.57 Url="https://docs.google.com/spreadsheets/u/0/"
- 9. INFO[0001] Successful !                                  Project=Google Times=1.69 Url="https://docs.google.com/document/u/0/"
-10. INFO[0002] Successful !                                  Project=Google Times=2.54 Url="https://mail.google.com/mail/u/0/#inbox"
-11. INFO[0002] Successful !                                  Project=Google Times=2.54 Url="https://plus.google.com/"
-12. INFO[0002] Successful !                                  Project=Google Times=2.62 Url="https://drive.google.com/drive/my-drive"
-Over time:      2.62s
-Success count   12 time
-Error count:    0 times
+ 1. INFO[0000] Successful !                                  Times=0.72 name="Golang pkgdoc"
+ 2. INFO[0005] Successful !                                  Times=5.26 name="google google_mail"
+ 3. INFO[0006] Successful !                                  Times=6.63 name="Golang golang_pkg"
+ 4. INFO[0012] Successful !                                  Times=12.03 name="google google_search"
+ 5. INFO[0012] Successful !                                  Times=12.10 name="Golang google_doc"
+ 6. ERRO[0027] Sorry don't connect:                          Url="http://cpepc.com.cn" err="Get \"http://cpepc.com.cn\": EOF" name="cpepc 001"
+Over time:      27.32s
+Success count   5 time
+Error count:    1 times
 ```
 
 ## 维护者
@@ -116,4 +123,3 @@ Error count:    0 times
 
 ## 使用许可
 
-[MIT](LICENSE) © kuliantnt
