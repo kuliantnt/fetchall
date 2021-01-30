@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	conf "mycode/fetchall/conf"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
 	log "github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v2"
 )
 
 var flagProject = flag.String("P", "", "Project name")
@@ -23,7 +25,22 @@ func init() {
 	log.SetOutput(os.Stdout)
 }
 
+type input struct {
+}
+
 func main() {
+	content, err := ioutil.ReadFile("api.yaml")
+	if err != nil {
+		panic(err)
+	}
+	// print(string(content))
+	env := conf.Projects{}
+	err = yaml.Unmarshal(content, &env)
+	fmt.Println(err, env)
+	return
+}
+
+func domain() {
 
 	//获取当前时间
 	start := time.Now()
@@ -100,7 +117,7 @@ func main() {
 	fmt.Printf("Over time:\t%.2fs\n"+
 		"Success count\t%d time\n"+
 		"Error count:\t%d times\n"+
-		"By Lin",
+		"By Lin\n",
 		time.Since(start).Seconds(), successfulCount, errCount)
 }
 

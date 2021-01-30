@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="df9f07f7-dea9-4245-9b3d-3769ce058267" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.15.7/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="$MAVEN_REPOSITORY$" />
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+        <option name="userSettingsFile" value="/usr/local/Cellar/maven/3.6.3/libexec/conf/settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1nkLqXMFTN7UIV4wmxyaqhlklhy" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="go build mycode/fetchall" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="fetchall" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <package value="mycode/fetchall" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build mycode/fetchall" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="df9f07f7-dea9-4245-9b3d-3769ce058267" name="Default Changelist" comment="" />
+      <created>1611929335505</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611929335505</updated>
+      <workItem from="1611929338648" duration="1891000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="517" y="394" key="#GOROOT" timestamp="1611929363291">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="517" y="394" key="#GOROOT/0.23.1440.877@0.23.1440.877" timestamp="1611929363291" />
+    <state x="443" y="288" key="#Notifications" timestamp="1611929378359">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="443" y="288" key="#Notifications/0.23.1440.877@0.23.1440.877" timestamp="1611929378359" />
+    <state width="1398" height="226" key="GridCell.Tab.0.bottom" timestamp="1611932109233">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="226" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1611932109233" />
+    <state width="1398" height="226" key="GridCell.Tab.0.center" timestamp="1611932109232">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="226" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1611932109232" />
+    <state width="1398" height="226" key="GridCell.Tab.0.left" timestamp="1611932109232">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="226" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1611932109232" />
+    <state width="1398" height="226" key="GridCell.Tab.0.right" timestamp="1611932109233">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="226" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1611932109233" />
+    <state width="1398" height="280" key="GridCell.Tab.1.bottom" timestamp="1611929547763">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="280" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1611929547763" />
+    <state width="1398" height="280" key="GridCell.Tab.1.center" timestamp="1611929547761">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="280" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1611929547761" />
+    <state width="1398" height="280" key="GridCell.Tab.1.left" timestamp="1611929547761">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="280" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1611929547761" />
+    <state width="1398" height="280" key="GridCell.Tab.1.right" timestamp="1611929547762">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1398" height="280" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1611929547762" />
+    <state x="221" y="100" key="SettingsEditor" timestamp="1611929416269">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="221" y="100" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1611929416269" />
+  </component>
+</project>
