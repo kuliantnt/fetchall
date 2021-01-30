@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	conf "mycode/fetchall/conf"
+	"mycode/fetchall/conf"
 	"net/http"
 	"os"
 	"strings"
@@ -15,7 +15,9 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+//是否通过项目名称过滤
 var flagProject = flag.String("P", "", "Project name")
+//是否通过URL过滤
 var flagURL = flag.String("U", "", "Url name")
 
 func init() {
@@ -25,72 +27,54 @@ func init() {
 	log.SetOutput(os.Stdout)
 }
 
-type input struct {
-}
-
 func main() {
-	content, err := ioutil.ReadFile("api.yaml")
+	//获取当前时间
+	start := time.Now()
+	//创建一个chan
+	ch := make(chan result)
+	index := 0
+	readFile, err := ioutil.ReadFile("api.yaml")
 	if err != nil {
 		panic(err)
 	}
-	// print(string(content))
-	env := conf.Projects{}
-	err = yaml.Unmarshal(content, &env)
-	fmt.Println(err, env)
-	return
-}
+	//projects 用户传入的参数
+	projects := conf.Projects{}
+	err = yaml.Unmarshal(readFile, &projects)
+	//根据yaml读取输入参数
+	for _, project := range projects.Project {
+		input := inputStruct{}
+		//传入的参数
+		input.project = project.Projectname
+		input.method = project.Method
+		for _, content := range project.Context {
+			input.url = content.URL
+			input.name = content.Name
 
-func domain() {
+			runProject := false
+			runURL := false
 
-	//获取当前时间
-	start := time.Now()
-	//创建两个chan
-	ch := make(chan result)
-	//获取当前目录
-	pwd, _ := os.Getwd()
-	//读取api.list
-	bytes, err := ioutil.ReadFile(pwd + "/api.list")
-	if err != nil {
-		log.Fatal(err)
-	}
-	index := 0
-	//根据空白分割符获取切片
-	urlSince := strings.Fields(string(bytes))
-	//新建一个变量
-	var prefix string
+			//根据 -P 入参判断是否执行
+			if *flagProject == "" {
+				runProject = true
+			} else if strings.Contains(input.project, *flagProject) {
+				runProject = true
+			}
 
-	for _, url := range urlSince {
-		if strings.HasPrefix(url, "#") {
-			//去掉前面的#
-			prefix = strings.TrimPrefix(url, "#")
-			//prefix = url
-			continue
-		}
-		//根据 -P 入参判断是否执行
-		runProject := false
-		var runURL bool = false
-		if *flagProject == "" {
-			runProject = true
-		} else if strings.Contains(prefix, *flagProject) {
-			runProject = true
-		}
-
-		//根据 -U 入参判断是否执行
-		if *flagURL == "" {
-			runURL = true
-		} else if strings.Contains(url, *flagURL) {
-			runURL = true
-		} else {
-			runURL = false
-		}
-		//实际上执行的语句
-		if runProject && runURL {
-			index++
-			go fetch(url, prefix, ch)
+			//根据 -U 入参判断是否执行
+			if *flagURL == "" {
+				runURL = true
+			} else if strings.Contains(input.url, *flagURL) {
+				runURL = true
+			} else {
+				runURL = false
+			}
+			//如果执行了
+			if runProject && runURL {
+				go fetch(input, ch)
+				index++
+			}
 		}
 	}
-
-	//用于统计错误信息
 	errCount := 0
 	successfulCount := 0
 	//根据channel输出
@@ -101,15 +85,15 @@ func domain() {
 		if output.error != nil {
 			//log.Error(output.name, "\t", output.info, "\t",output.error)
 			log.WithFields(log.Fields{
-				"Project": output.name,
+				"name": output.name,
 				"Url":     output.info,
 				"err":     output.error}).Error("Sorry don't connect:")
 			errCount++
 		} else {
 			log.WithFields(log.Fields{
 				"Times":   output.time,
-				"Project": output.name,
-				"Url":     output.info}).Info("Successful !")
+				"name": output.name,
+			}).Info("Successful !")
 			successfulCount++
 		}
 	}
@@ -122,15 +106,17 @@ func domain() {
 }
 
 //根据url获取
-func fetch(url, prefix string, ch chan<- result) {
+func fetch(input inputStruct, ch chan<- result) {
+	//设定prefix
+	prefix := input.project + " " + input.name
 	//开始时间
 	start := time.Now()
 	//使用get方法获取resp
-	resp, err := http.Get(url)
+	resp, err := http.Get(input.url)
 	if err != nil {
 		//如果错误，发送到信道
 		ch <- result{
-			prefix, url, err, "",
+			prefix, input.url, err, "",
 		}
 		return
 	}
@@ -139,7 +125,7 @@ func fetch(url, prefix string, ch chan<- result) {
 	if err != nil {
 		//出现错误
 		ch <- result{
-			prefix, url, err, "",
+			prefix, input.url, err, "",
 		}
 		return
 	}
@@ -149,15 +135,28 @@ func fetch(url, prefix string, ch chan<- result) {
 	//导出数据
 	ch <- result{
 		prefix,
-		url,
+		"",
 		nil,
 		fmt.Sprintf("%.2f", secs),
 	}
 }
 
+//result 出信道的参数
 type result struct {
 	name  string
 	info  string
 	error error
 	time  string
+}
+
+//inputStruct 输入信道的参数
+type inputStruct struct {
+	//project name 项目名称
+	project string
+	//name 部署的名称
+	name string
+	//method GET or POST方法
+	method string
+	//url URL地址
+	url string
 }
