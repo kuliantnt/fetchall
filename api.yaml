@@ -3,7 +3,7 @@ projects:
     method: GET
     context:
       - { url: https://mail.google.com/mail/u/0/#inbox, name: google_mail }
-      - { url: https://www.google.com/, name: google_search }
+      - { url: https://www.google.com/ , name: google_search }
   - projectname: Golang
     method: GET
     context:

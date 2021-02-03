@@ -1,12 +1,14 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"mycode/fetchall/conf"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -17,6 +19,7 @@ import (
 
 //是否通过项目名称过滤
 var flagProject = flag.String("P", "", "Project name")
+
 //是否通过URL过滤
 var flagURL = flag.String("U", "", "Url name")
 
@@ -37,9 +40,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	//fmt.Println(string(readFile))
 	//projects 用户传入的参数
 	projects := conf.Projects{}
 	err = yaml.Unmarshal(readFile, &projects)
+	//debug
+	//fmt.Println(projects)
 	//根据yaml读取输入参数
 	for _, project := range projects.Project {
 		input := inputStruct{}
@@ -86,13 +92,13 @@ func main() {
 			//log.Error(output.name, "\t", output.info, "\t",output.error)
 			log.WithFields(log.Fields{
 				"name": output.name,
-				"Url":     output.info,
-				"err":     output.error}).Error("Sorry don't connect:")
+				"Url":  output.info,
+				"err":  output.error}).Error("Sorry don't connect:")
 			errCount++
 		} else {
 			log.WithFields(log.Fields{
-				"Times":   output.time,
-				"name": output.name,
+				"Times": output.time,
+				"name":  output.name,
 			}).Info("Successful !")
 			successfulCount++
 		}
@@ -111,8 +117,20 @@ func fetch(input inputStruct, ch chan<- result) {
 	prefix := input.project + " " + input.name
 	//开始时间
 	start := time.Now()
-	//使用get方法获取resp
-	resp, err := http.Get(input.url)
+	var resp *http.Response
+	var err error
+	if input.method == "GET" {
+		//使用get方法获取resp
+		resp, err = http.Get(input.url)
+	} else if input.method == "POST" {
+		params := url.Values{}
+		resp, err = http.PostForm(input.url, params)
+	} else {
+		err = errors.New(" Wrong request method")
+		ch <- result{
+			prefix, input.url, err, "",
+		}
+	}
 	if err != nil {
 		//如果错误，发送到信道
 		ch <- result{
