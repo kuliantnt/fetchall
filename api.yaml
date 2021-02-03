@@ -4,6 +4,7 @@ projects:
     context:
       - { url: https://mail.google.com/mail/u/0/#inbox, name: google_mail }
       - { url: https://www.google.com/ , name: google_search }
+      - { url: http://www.google.com/test2, name: test }
   - projectname: Golang
     method: GET
     context:
