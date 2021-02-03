@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -126,12 +127,16 @@ func fetch(input inputStruct, ch chan<- result) {
 		params := url.Values{}
 		resp, err = http.PostForm(input.url, params)
 	} else {
-		err = errors.New(" Wrong request method")
+		err = errors.New("Wrong request method")
 		ch <- result{
 			prefix, input.url, err, "",
 		}
 	}
 	if err != nil {
+		//用来显示错误码
+		if resp != nil {
+			err = errors.New(prefix + "error code: " + strconv.Itoa(resp.StatusCode))
+		}
 		//如果错误，发送到信道
 		ch <- result{
 			prefix, input.url, err, "",
