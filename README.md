@@ -1,11 +1,11 @@
 # fetchall
 
-![GitHub issues](https://img.shields.io/github/issues/kuliantnt/fetchall)
+<!-- ![GitHub issues](https://img.shields.io/github/issues/kuliantnt/fetchall)
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/kuliantnt/fetchall?include_prereleases)
 ![GitHub last commit](https://img.shields.io/github/last-commit/kuliantnt/fetchall)
 ![GitHub issues](https://img.shields.io/github/issues-raw/kuliantnt/fetchall)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/kuliantnt/fetchall)
-![GitHub](https://img.shields.io/github/license/kuliantnt/fetchall)
+![GitHub](https://img.shields.io/github/license/kuliantnt/fetchall) -->
 
 ## 内容列表
 
